@@ -1,0 +1,53 @@
+(defwidget bar []
+  (centerbox :orientation "h"
+    (leftstuff)
+    (box :class "sidestuff" {formattime(EWW_TIME, "%H:%M")})
+    (sidestuff)))
+
+(defvar audio-icon "")
+
+(defwidget leftstuff []
+  (box :class "sidestuff" :orientation "h" :space-evenly false :halign "start"
+    (metric :label ""
+            :value {EWW_RAM.used_mem_perc}
+            :onchange "")
+    (metric :label "💾"
+            :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
+            :onchange "")
+    (metric :label ""
+            :value {EWW_CPU.avg}
+            :onchange "")))
+    
+
+(defwidget sidestuff []
+  (box :class "sidestuff" :orientation "h" :space-evenly false :halign "end"
+    (button :onclick "scripts/toggle_output" :class "audio-toggle" :width "10px"
+      (box :orientation "h" :spacing "8" audio-icon))
+    (metric :label "🔊"
+            :value volume
+            :onchange "wpctl set-volume @DEFAULT_AUDIO_SINK@ {}%")))
+
+
+(defwidget metric [label value onchange]
+  (box :orientation "h"
+       :class "metric"
+       :space-evenly false
+    (box :class "label" label)
+    (scale :min 0
+           :max 101
+           :active {onchange != ""}
+           :value value
+           :onchange onchange)))
+
+(defpoll volume :interval "1s"
+  "scripts/getvol")
+
+(defwindow bar
+  :monitor 0
+  :exclusive true
+  :geometry (geometry :x "0%"
+                      :y "0%"
+                      :width "100%"
+                      :height "10px"
+                      :anchor "top center")
+  (bar))

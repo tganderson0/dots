@@ -1,0 +1,14 @@
+#!/bin/sh
+current_sink=$(pactl get-default-sink)
+
+headphones="alsa_output.usb-Focusrite_Scarlett_2i2_4th_Gen_S2BNTHN429910A-00.HiFi__Line1__sink"
+speaker="alsa_output.pci-0000_10_00.6.analog-stereo"
+
+if [ $current_sink = $headphones ]; then
+  pactl set-default-sink $speaker
+  eww update audio-icon="󰓃"
+else
+  pactl set-default-sink $headphones
+  eww update audio-icon=""
+fi
+

@@ -1,0 +1,83 @@
+// -*- mode: jsonc -*-
+{
+    // "layer": "top", // Waybar at top layer
+    // "position": "bottom", // Waybar position (top|bottom|left|right)
+    "height": 30, // Waybar height (to be removed for auto height)
+    // "width": 1280, // Waybar width
+    "spacing": 4, // Gaps between modules (4px)
+    // Choose the order of the modules
+    "modules-left": [
+        "hyprland/workspaces"
+    ],
+    "modules-center": [
+        "clock"
+    ],
+    "modules-right": [
+        "wireplumber",
+        "network",
+        "keyboard-state",
+        "custom/power"
+    ],
+    "hyprland/workspaces": {
+        "on-click": "activate",
+        "format": "{icon}",
+        "format-icons": {
+            "default": "",
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "6": "6",
+            "7": "7",
+            "8": "8",
+            "9": "9",
+            "active": "󱓻",
+            "urgent": "󱓻"
+        },
+        "persistent_workspaces": {
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": []
+        }
+    },
+    "clock": {
+        // "timezone": "America/New_York",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format-alt": "{:%Y-%m-%d}"
+    },
+    "cpu": {
+        "format": "{usage}% ",
+        "tooltip": false
+    },
+    "memory": {
+        "format": "{}% "
+    },
+    "temperature": {
+        "critical-threshold": 80,
+        "format": "{temperatureC}°C {icon}",
+        "format-icons": ["", "", ""]
+    },
+    "network": {
+        "interface": "en*", // (Optional) To force the use of this interface
+        "format-ethernet": "{bandwidthDownBits}  | {bandwidthUpBits} ",
+        "tooltip-format": "{ifname} via {gwaddr} ",
+        "format-linked": "{ifname} (No IP) ",
+        "format-disconnected": "Disconnected ⚠",
+        "interval": 10
+    },
+    "wireplumber": {
+      "format": "{node_name} : {volume}% {icon}",
+      "format-muted": "",
+      "on-click": "pactl set-default-sink alsa_output.usb-Focusrite_Scarlett_2i2_4th_Gen_S2BNTHN429910A-00.HiFi__Line1__sink",
+      "on-click-right": "pactl set-default-sink alsa_output.pci-0000_10_00.6.analog-stereo",
+      "format-icons": ["", "", ""]
+    },
+    "custom/power": {
+        "format" : "⏻ ",
+        "tooltip": false,
+        "on-click": "~/.config/wofi/wofi-power-menu &"
+    }
+}
